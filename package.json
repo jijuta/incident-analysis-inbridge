@@ -1,0 +1,37 @@
+{
+  "name": "incident-analysis-inbridge",
+  "version": "1.0.0",
+  "description": "인시던트 분석 MCP 프록시 클라이언트",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "incident-analysis-inbridge": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo 'Testing incident analysis inbridge client'"
+  },
+  "keywords": [
+    "mcp",
+    "incident",
+    "analysis",
+    "proxy",
+    "client",
+    "opensearch",
+    "security"
+  ],
+  "author": "InBridge Team",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.6.0",
+    "axios": "^1.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jijuta/incident-analysis-inbridge.git"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ]
+}
