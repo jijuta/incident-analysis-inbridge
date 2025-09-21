@@ -194,6 +194,7 @@ rl.on('line', async (line) => {
 
     if (request.method === 'initialize') {
       // 초기화 응답
+      const safeId = request.id !== null && request.id !== undefined ? request.id : 0;
       const response = {
         jsonrpc: "2.0",
         result: {
@@ -206,7 +207,7 @@ rl.on('line', async (line) => {
             version: "1.0.0"
           }
         },
-        id: request.id
+        id: safeId
       };
       console.log(JSON.stringify(response));
 
@@ -217,7 +218,7 @@ rl.on('line', async (line) => {
         result: {
           tools: TOOLS
         },
-        id: request.id
+        id: request.id !== null && request.id !== undefined ? request.id : 0
       };
       console.log(JSON.stringify(response));
 
@@ -228,7 +229,7 @@ rl.on('line', async (line) => {
         result: {
           prompts: []
         },
-        id: request.id
+        id: request.id !== null && request.id !== undefined ? request.id : 0
       };
       console.log(JSON.stringify(response));
 
@@ -239,7 +240,7 @@ rl.on('line', async (line) => {
         result: {
           resources: []
         },
-        id: request.id
+        id: request.id !== null && request.id !== undefined ? request.id : 0
       };
       console.log(JSON.stringify(response));
 
@@ -259,11 +260,14 @@ rl.on('line', async (line) => {
 
       console.error(`📥 HTTP Response status: ${httpResponse.status} | Success: ${httpResponse.data.success}`);
 
+      // ID가 null인 경우 적절한 기본값 설정
+      const safeRequestId = request.id !== null && request.id !== undefined ? request.id : 0;
+
       if (httpResponse.data.success) {
         const response = {
           jsonrpc: "2.0",
           result: httpResponse.data,
-          id: request.id
+          id: safeRequestId
         };
         console.log(JSON.stringify(response));
       } else {
@@ -287,13 +291,16 @@ rl.on('line', async (line) => {
 
     console.error(`❌ Error: ${error.message}`);
 
+    // ID가 null인 경우 적절한 기본값 설정
+    const safeRequestId = requestId !== null ? requestId : 0;
+
     const errorResponse = {
       jsonrpc: "2.0",
       error: {
         code: -32603,
         message: error.message
       },
-      id: requestId
+      id: safeRequestId
     };
     console.log(JSON.stringify(errorResponse));
   }
