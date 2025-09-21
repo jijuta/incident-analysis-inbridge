@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const readline = require('readline');
-const axios = require('axios');
+import readline from 'readline';
+import axios from 'axios';
 
 // MCP_SERVER_URL은 필수 환경변수
 const MCP_SERVER_URL = process.env.MCP_SERVER_URL;
@@ -62,8 +62,8 @@ const TOOLS = [
       properties: {
         index_pattern: {
           type: 'string',
-          description: '검색할 인덱스 패턴 (예: security-logs-*, incident-*)',
-          default: 'security-logs-*',
+          description: '검색할 인덱스 패턴 (예: logs-cortex_xdr-incidents-*, logs-cortex_xdr-alerts-*)',
+          default: 'logs-cortex_xdr-incidents-*',
         },
         days: {
           type: 'number',
@@ -88,7 +88,7 @@ const TOOLS = [
         index_pattern: {
           type: 'string',
           description: '검색할 인덱스 패턴',
-          default: 'security-logs-*',
+          default: 'logs-cortex_xdr-incidents-*',
         },
         days: {
           type: 'number',
@@ -114,7 +114,7 @@ const TOOLS = [
         index_pattern: {
           type: 'string',
           description: '검색할 인덱스 패턴',
-          default: 'security-logs-*',
+          default: 'logs-cortex_xdr-incidents-*',
         },
         days: {
           type: 'number',
@@ -144,7 +144,7 @@ const TOOLS = [
         index_pattern: {
           type: 'string',
           description: '검색할 인덱스 패턴',
-          default: 'security-logs-*',
+          default: 'logs-cortex_xdr-incidents-*',
         },
         days: {
           type: 'number',
@@ -169,7 +169,7 @@ const TOOLS = [
         index_pattern: {
           type: 'string',
           description: '검색할 인덱스 패턴',
-          default: 'security-logs-*',
+          default: 'logs-cortex_xdr-incidents-*',
         },
         days: {
           type: 'number',
@@ -216,6 +216,28 @@ rl.on('line', async (line) => {
         jsonrpc: "2.0",
         result: {
           tools: TOOLS
+        },
+        id: request.id
+      };
+      console.log(JSON.stringify(response));
+
+    } else if (request.method === 'prompts/list') {
+      // 프롬프트 목록 응답 (빈 목록)
+      const response = {
+        jsonrpc: "2.0",
+        result: {
+          prompts: []
+        },
+        id: request.id
+      };
+      console.log(JSON.stringify(response));
+
+    } else if (request.method === 'resources/list') {
+      // 리소스 목록 응답 (빈 목록)
+      const response = {
+        jsonrpc: "2.0",
+        result: {
+          resources: []
         },
         id: request.id
       };
